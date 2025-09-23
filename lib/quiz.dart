@@ -2,6 +2,7 @@
 // needs to return MaterialApp
 import 'package:flutter/material.dart';
 import 'package:quiz_app/data/questions.dart';
+import 'package:quiz_app/select_quiz.dart';
 import 'start_screen.dart';
 import 'questions_screen.dart';
 import 'results_screen.dart';
@@ -19,7 +20,21 @@ class _QuizState extends State<Quiz> {
   List<String> selectedAnswers = [];
   var activeScreen = 'start-screen';
 
+  int selectedQuiz = 2;
+
+  // void switchScreen() {
+  //   setState(() {
+  //     activeScreen = 'questions-screen';
+  //   });
+  // }
   void switchScreen() {
+    setState(() {
+      activeScreen = 'select-quiz-screen';
+    });
+  }
+
+  void startQuiz(int number){
+    selectedQuiz = number;
     setState(() {
       activeScreen = 'questions-screen';
     });
@@ -28,17 +43,23 @@ class _QuizState extends State<Quiz> {
   void chooseAnswer(String answer) {
     selectedAnswers.add(answer);
 
-    if (selectedAnswers.length == questions.length) {
+    if (selectedAnswers.length == quizQuestions.length) {
       setState(() {
         activeScreen = 'results-screen';
       });
     }
   }
 
+  // void restartQuiz() {
+  //   setState(() {
+  //     selectedAnswers = [];
+  //     activeScreen = 'questions-screen';
+  //   });
+  // }
   void restartQuiz() {
     setState(() {
       selectedAnswers = [];
-      activeScreen = 'questions-screen';
+      activeScreen = 'select-quiz-screen';
     });
   }
 
@@ -49,6 +70,7 @@ class _QuizState extends State<Quiz> {
     if (activeScreen == 'questions-screen') {
       screenWidget = QuestionsScreen(
         onSelectAnswer: chooseAnswer,
+        quizNumber: selectedQuiz,
       );
     }
 
@@ -56,7 +78,14 @@ class _QuizState extends State<Quiz> {
       screenWidget = ResultsScreen(
         chosenAnswers: selectedAnswers,
         onRestart: restartQuiz,
+        quizNumber: selectedQuiz,
       );
+    
+    if (activeScreen == 'select-quiz-screen'){
+      screenWidget = SelectQuizScreen(
+        startQuizNumber: startQuiz
+        );
+    }
     }
 
     return MaterialApp(
