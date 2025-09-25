@@ -80,12 +80,12 @@ class _QuizState extends State<Quiz> {
         onRestart: restartQuiz,
         quizNumber: selectedQuiz,
       );
-    
+    }
+
     if (activeScreen == 'select-quiz-screen'){
       screenWidget = SelectQuizScreen(
         startQuizNumber: startQuiz
         );
-    }
     }
 
     return MaterialApp(
