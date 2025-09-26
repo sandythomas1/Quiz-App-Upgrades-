@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:quiz_app/data/questions.dart';
 import 'questions_summary/questions_summary.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:quiz_app/review_page.dart';
+
+
 
 class ResultsScreen extends StatelessWidget {
   const ResultsScreen({
@@ -71,7 +74,23 @@ class ResultsScreen extends StatelessWidget {
               ),
               icon: const Icon(Icons.refresh),
               label: const Text('Restart Quiz!'),
-            )
+            ),
+          // display review text button similar to restart button
+          TextButton.icon(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ReviewPage(),
+                ),
+              );
+            },
+            style: TextButton.styleFrom(
+              foregroundColor: Colors.white,
+            ),
+            icon: const Icon(Icons.rate_review),
+            label: const Text('Leave a Review'),
+          ),
           ],
         ),
       ),
@@ -79,4 +98,3 @@ class ResultsScreen extends StatelessWidget {
   }
 }
 
-// want to create a class and button to export results to txt file
